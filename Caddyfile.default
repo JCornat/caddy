@@ -4,11 +4,23 @@
 
 # Configuration when the server is in another container
 # and client is hosted on the webserver
-my.domain {
-    reverse_proxy /api/* container:3000 # Replace "container" with the container name
+&(my-domain-proxy) { # Rename the variable
+    reverse_proxy container:3000 # Replace "container" with the container name
+}
 
-    root * /srv/my_directory # Replace "my_directory" with the right directory (in local folder "static")
-    encode gzip
-    try_files {path} /index.html
-    file_server
+my.domain {
+    handle /api/* {
+        invoke my-domain-proxy # Rename the variable
+    }
+
+    handle /image/* {
+        invoke my-domain-proxy # Rename the variable
+    }
+
+    handle {
+        root * /srv/my_directory # Replace "my_directory" with the right directory (in local folder "static")
+        encode gzip
+        try_files {path} /index.html
+        file_server
+    }
 }
