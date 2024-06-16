@@ -1,0 +1,11 @@
+.idea
+.env
+
+config/*
+!config/.gitkeep
+
+data/*
+!data/.gitkeep
+
+static/*
+!static/.gitkeep

@@ -1,0 +1,14 @@
+{
+    email xxx@xxx # Replace "xxx@xxx" with the right mail
+}
+
+# Configuration when the server is in another container
+# and client is hosted on the webserver
+my.domain {
+    reverse_proxy /api/* container:3000 # Replace "container" with the container name
+
+    root * /srv/my_directory # Replace "my_directory" with the right directory (in local folder "static")
+    encode gzip
+    try_files {path} /index.html
+    file_server
+}
